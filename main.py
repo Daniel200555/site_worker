@@ -10,7 +10,7 @@ from controller import Controller
 from read_env import ReadEnv
 
 def main() -> int:
-    print_start_log("MAIN", "MAIN", f"WORKER STARTED")
+    print_start_log("main", "main", f"WORKER STARTED")
     parser = argparse.ArgumentParser()
     parser.add_argument("--site_name", required=True, type=str)
     parser.add_argument("--guid_dict", type=str, help="JSON with lib of guid")
@@ -27,16 +27,16 @@ def main() -> int:
         if files:
             for file in files:
                 if file["change_type"] == 1:
-                    print_start_log("MAIN", "MAIN", f"Start worker to add new site in local storage")
+                    print_start_log("main", "main", f"Start worker to add new site in local storage")
                     controller.site_add(read_env.master_site_name, file)
                 elif file["change_type"] == 2:
-                    print_start_log("MAIN", "MAIN", f"Start worker to upgrage exists site in local storage")
+                    print_start_log("main", "main", f"Start worker to upgrage exists site in local storage")
                     controller.site_update(read_env.master_site_name, file)
 
         if guid_dict:
-            print_start_log("MAIN", "MAIN", f"Start update in site {site_name}")
+            print_start_log("main", "main", f"Start update in site {site_name}")
             for name, guid in guid_dict.items():
-                print_log("MAIN", "MAIN", f"Start to update list with guid {guid} in site {site_name}")
+                print_log("main", "main", f"Start to update list with guid {guid} in site {site_name}")
                 controller.list_create_rewrite(site_name, name, guid)
         result: dict = {
             "pid" : os.getpid(),
